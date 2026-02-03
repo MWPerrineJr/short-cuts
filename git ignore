@@ -1,0 +1,77 @@
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# -------------------------
+# Ruff / linters / formatters
+# -------------------------
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# -------------------------
+# Jupyter / Data Science
+# -------------------------
+.ipynb_checkpoints/
+
+# Data files (customize!)
+data/
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.pkl
+*.joblib
+*.h5
+
+# -------------------------
+# Logs & temp files
+# -------------------------
+*.log
+*.tmp
+*.temp
+
+# -------------------------
+# VS Code
+# -------------------------
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# -------------------------
+# macOS
+# -------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# -------------------------
+# Node / frontend (if applicable)
+# -------------------------
+node_modules/
+
+# -------------------------
+# Secrets (VERY IMPORTANT)
+# -------------------------
+.env
+.env.*
+*.key
+*.pem
+secrets.yml

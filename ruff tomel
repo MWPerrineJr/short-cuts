@@ -1,0 +1,12 @@
+[tool.ruff]
+exclude = [
+  ".venv",
+  ".git",
+  ".ruff_cache",
+  "__pycache__",
+  "node_modules",
+  "build",
+  "dist",
+]
+
+lint.extend-select = ["PTH"]
