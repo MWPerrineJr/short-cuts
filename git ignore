@@ -1,77 +1,90 @@
-# -------------------------
-# Python
-# -------------------------
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*$py.class
 
-# Virtual environments
-.venv/
-venv/
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
 env/
-
-# Python packaging
 build/
+develop-eggs/
 dist/
-*.egg-info/
+downloads/
+eggs/
 .eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# -------------------------
-# Ruff / linters / formatters
-# -------------------------
-.ruff_cache/
-.mypy_cache/
-.pytest_cache/
-.coverage
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
 htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
 
-# -------------------------
-# Jupyter / Data Science
-# -------------------------
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# DotEnv configuration
+.env
+
+# Database
+*.db
+*.rdb
+
+# Pycharm
+.idea
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Spyder
+.spyproject/
+
+# Jupyter NB Checkpoints
 .ipynb_checkpoints/
 
-# Data files (customize!)
-data/
-*.csv
-*.tsv
-*.parquet
-*.feather
-*.pkl
-*.joblib
-*.h5
-
-# -------------------------
-# Logs & temp files
-# -------------------------
-*.log
-*.tmp
-*.temp
-
-# -------------------------
-# VS Code
-# -------------------------
-.vscode/
-!.vscode/settings.json
-!.vscode/extensions.json
-
-# -------------------------
-# macOS
-# -------------------------
+# Mac OS-specific storage files
 .DS_Store
-.AppleDouble
-.LSOverride
-Icon?
 
-# -------------------------
-# Node / frontend (if applicable)
-# -------------------------
-node_modules/
+# vim
+*.swp
+*.swo
 
-# -------------------------
-# Secrets (VERY IMPORTANT)
-# -------------------------
-.env
-.env.*
-*.key
-*.pem
-secrets.yml
+# Mypy cache
+.mypy_cache/
+
+# Virtual environment
+.venv/
