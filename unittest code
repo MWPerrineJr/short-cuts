@@ -1,0 +1,20 @@
+class TestMyProject(unittest.TestCase):
+
+    def test_anthropic_api_key_loaded(self):
+        self.assertIsNotNone(os.getenv("ANTHROPIC_API_KEY"), "ANTHROPIC_API_KEY is missing from .env")
+
+    def test_openai_api_key_loaded(self):
+        self.assertIsNotNone(os.getenv("OPENAI_API_KEY"), "OPENAI_API_KEY is missing from .env")
+
+    def test_groq_api_key_loaded(self):
+        self.assertIsNotNone(os.getenv("GROQ_API_KEY"), "GROQ_API_KEY is missing from .env")
+
+    def test_api_keys_not_empty(self):
+        for key in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "GROQ_API_KEY"):
+            self.assertNotEqual(os.getenv(key, ""), "", f"{key} is set but empty")
+
+    def test_example(self):
+        self.assertEqual(1 + 1, 2)
+
+if __name__ == "__main__":
+    unittest.main()
