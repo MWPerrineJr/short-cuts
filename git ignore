@@ -58,6 +58,8 @@ target/
 
 # DotEnv configuration
 .env
+.env.*
+*.env
 
 # Database
 *.db
@@ -86,5 +88,19 @@ target/
 # Mypy cache
 .mypy_cache/
 
+# Pyright / Pylance
+pyrightconfig.json
+.pyright/
+
+# Pytest
+.pytest_cache/
+
+# uv
+.uv/
+
 # Virtual environment
 .venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
