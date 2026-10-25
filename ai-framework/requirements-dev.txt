@@ -1,0 +1,12 @@
+# =============================================================================
+# requirements-dev.txt — development extras for ai-framework
+# Installs the shared stack (repo root requirements.txt, which already includes
+# ruff, mypy, pytest, pytest-asyncio, pre-commit) plus testing extras below.
+#
+#     pip install -r requirements-dev.txt        (run from the ai-framework folder)
+# =============================================================================
+
+-r ../requirements.txt
+
+pytest-cov>=5.0             # coverage reports: pytest --cov=src
+pytest-mock>=3.14           # `mocker` fixture for faking LLM calls in tests

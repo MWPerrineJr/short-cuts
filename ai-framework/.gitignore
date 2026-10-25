@@ -1,0 +1,45 @@
+# ---------- Secrets ----------
+.env
+.env.*
+!.env.example
+
+# ---------- Environments ----------
+.venv/
+venv/
+env/
+
+# ---------- Python build & cache ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---------- Notebooks ----------
+.ipynb_checkpoints/
+
+# ---------- Data & generated artifacts ----------
+# Keep real data out of git; the small sample set for examples is allowed.
+data/*
+!data/sample/
+!data/.gitkeep
+vectorstore/
+chroma/
+*.faiss
+mlruns/
+
+# ---------- App runtime ----------
+.gradio/
+flagged/
+.streamlit/secrets.toml
+*.log
+
+# ---------- OS / editor ----------
+.DS_Store
+Thumbs.db
+.idea/
