@@ -77,10 +77,11 @@ Open **this folder** (`ai-framework/`) as the workspace so `.vscode/` settings a
 | `src/aiframe/tools/` | Sample tools: safe calculator, datetime, note search | Step 3 ✅ |
 | `data/sample/` | Fictional handbook, product FAQ, ML glossary for RAG/agent demos | Step 3 ✅ |
 | `apps/` | Gradio, Streamlit, FastAPI front ends | Step 4 ✅ |
-| `src/aiframe/eval/` | Golden-set evaluation, LLM-as-judge | Step 5 |
-| `tests/` | Unit tests with mocked LLMs (no API cost) | Step 5 |
-| `notebooks/` | Quickstart notebook using `IPython.display` | Step 5 |
-| `examples/` | Runnable, numbered walkthrough of every layer | ongoing |
+| `src/aiframe/eval/` | Golden-set evaluation: retrieval metrics, LLM-as-judge, confidence intervals | Step 5 ✅ |
+| `data/eval/` | Golden set: labeled questions for the sample docs, including unanswerable ones | Step 5 ✅ |
+| `tests/` | 72 pytest tests with fake models (no API cost), ~94% coverage | Step 5 ✅ |
+| `notebooks/` | Quickstart notebook using `IPython.display` | Step 5 ✅ |
+| `examples/` | Runnable, numbered walkthrough of every layer | ✅ |
 
 ---
 
@@ -98,7 +99,10 @@ and has `# TRY:` comments suggesting experiments.
 | 05 | `examples/05_agent.py` | Tool-calling agent with traced calls and thread memory |
 | 06 | `examples/06_extract.py` | Text → Pydantic → DataFrame, plus a custom schema |
 | 07 | `examples/07_batch.py` | Async batch with retries, latency metrics (`--compare` for speedup) |
-| 08 | `examples/08_evaluate.py` | Scoring against a golden set *(Step 5)* |
+| 08 | `examples/08_evaluate.py` | Golden-set evaluation comparing two configs (`k=2` vs `k=4`), reports saved to `reports/` |
+
+Prefer a notebook? `notebooks/01_quickstart.ipynb` walks through the same layers
+with rendered Markdown output, live-updating streams, and DataFrames.
 
 ---
 
@@ -127,6 +131,53 @@ FastAPI endpoints:
 
 ---
 
+## Evaluation
+
+Treat the LLM system like any predictive model: a labeled hold-out set, metrics,
+and controlled comparisons. `python examples/08_evaluate.py` runs the golden set
+(`data/eval/golden_set.jsonl`) and reports:
+
+| Metric | Measures |
+|---|---|
+| `hit_rate`, `mrr` | **Retrieval**: was an expected source retrieved, and how high was it ranked? |
+| `accuracy` (+ `accuracy_ci95`) | **Generation**: share of answers an LLM judge scores ≥ 4/5, with a 95% Wilson interval |
+| `refusal_accuracy` | Unanswerable questions correctly answered "I don't know" |
+| `false_refusals` | Answerable questions wrongly refused |
+
+Golden set format, one JSON object per line:
+
+```json
+{"id": "pto-new", "question": "How many PTO days...?", "reference": "15 days...", "expected_sources": ["company_handbook.md"], "answerable": true}
+```
+
+Tips: change one variable per comparison; read the confidence interval before
+declaring a winner; use a different model as judge where possible
+(`evaluate_rag(..., judge_llm=get_llm(provider=..., model=...))`); and spot-check
+the judge's reasoning in the saved CSV.
+
+---
+
+## Testing
+
+```bash
+pytest                       # all 72 tests, ~10s, no API calls or keys needed
+pytest -m "not slow"         # skip the app/UI tests
+pytest --cov=src --cov=apps  # with coverage
+```
+
+Tests never touch real models: fake chat models and embeddings stand in, and an
+autouse fixture hides your `.env`, so results are identical on every machine and
+in CI. In VS Code, tests appear in the Testing panel.
+
+| File | Covers |
+|---|---|
+| `tests/test_core.py` | Settings validation, model factory per provider, prompts, schemas |
+| `tests/test_workflows.py` | Chat memory, RAG retrieval and RRF, tool safety, agent trace, extraction, batch retries and concurrency |
+| `tests/test_apps.py` | FastAPI endpoints (TestClient), Gradio handlers, Streamlit (`AppTest`) |
+| `tests/test_eval.py` | Golden-set file validity, refusal detection, metrics, Wilson interval, reports |
+
+---
+
 ## Configuration reference
 
 All values are set in `.env` (see `.env.example`). Blank values use defaults.
@@ -149,8 +200,8 @@ Using settings in code:
 from config.settings import get_settings
 
 settings = get_settings()
-provider, model = settings.require_llm()    # raises ConfigError with a fix-it message
-settings.apply_tracing()                     # enables LangSmith if configured
+provider, model = settings.require_llm()  # raises ConfigError with a fix-it message
+settings.apply_tracing()  # enables LangSmith if configured
 ```
 
 ---
