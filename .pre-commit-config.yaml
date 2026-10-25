@@ -1,0 +1,36 @@
+# =============================================================================
+# pre-commit: runs checks automatically on `git commit`, before code reaches CI.
+#
+# One-time setup (from the repo root, with your venv active):
+#     pre-commit install
+# Run on everything manually:
+#     pre-commit run --all-files
+#
+# Lives at the repo root because pre-commit reads its config from there.
+# Hooks are scoped to ai-framework/ so other folders are unaffected.
+# =============================================================================
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.9 # keep in sync with RUFF_VERSION in .github/workflows/ai-framework-ci.yml
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+        files: ^ai-framework/
+      - id: ruff-format
+        files: ^ai-framework/
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+        files: ^(ai-framework/|\.github/|\.pre-commit-config\.yaml$)
+      - id: check-json
+        files: ^ai-framework/
+      - id: end-of-file-fixer
+        files: ^ai-framework/
+      - id: trailing-whitespace
+        files: ^ai-framework/
+        args: [--markdown-linebreak-ext=md]
+      - id: check-added-large-files
+        args: [--maxkb=1000]
+      - id: detect-private-key # blocks committing secrets by accident

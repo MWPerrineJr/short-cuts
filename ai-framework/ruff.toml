@@ -1,0 +1,12 @@
+# Ruff configuration for ai-framework.
+#
+# `src` tells Ruff which folders hold first-party code (`config` lives at the
+# project root, `aiframe` under src/). Without it, import sorting depends on
+# the directory Ruff runs from, so the editor, pre-commit (repo root) and CI
+# (this folder) could disagree.
+src = [".", "src"]
+line-length = 88
+target-version = "py311"
+
+[lint.isort]
+known-first-party = ["aiframe", "config", "apps", "tests"]

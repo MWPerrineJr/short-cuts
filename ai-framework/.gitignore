@@ -19,6 +19,8 @@ dist/
 .ruff_cache/
 .coverage
 htmlcov/
+coverage.xml
+pytest-results.xml
 
 # ---------- Notebooks ----------
 .ipynb_checkpoints/
