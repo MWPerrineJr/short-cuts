@@ -1,0 +1,87 @@
+# =============================================================================
+# requirements.txt — AI Engineering Stack
+# Stack: Python 3.11+ | VS Code | LangChain family | Gradio | Streamlit
+# Strategy: floors (>=) here; lock exact versions with uv/pip-tools
+# =============================================================================
+
+# ---------- Core config & utilities ----------
+python-dotenv>=1.0          # load API keys from .env
+pydantic[email]>=2.7        # data validation (LangChain is pydantic v2-native)
+pydantic-settings>=2.3      # typed settings from env vars
+httpx>=0.27                 # async HTTP client
+tenacity>=8.2               # retry/backoff for flaky LLM APIs
+rich>=13.7                  # readable console output and tracebacks
+tqdm>=4.66                  # progress bars
+pyyaml>=6.0                 # config files
+
+# ---------- Async ecosystem (asyncio itself is stdlib — do NOT pip install it) ----------
+aiohttp>=3.9                # async HTTP client/server
+aiofiles>=23.2              # non-blocking file I/O
+anyio>=4.4                  # structured concurrency (used by FastAPI/httpx)
+nest-asyncio>=1.6           # run async code inside Jupyter notebooks
+uvloop>=0.19; sys_platform != "win32"   # faster event loop (Linux/macOS only)
+
+# ---------- LangChain family ----------
+langchain>=1.0
+langchain-core>=1.0
+langchain-community>=0.3    # community loaders and integrations
+langchain-text-splitters>=0.3
+langgraph>=1.0              # agents and stateful workflows
+langsmith>=0.3              # tracing, evals, debugging
+
+# ---------- LLM provider integrations (keep the ones you use) ----------
+langchain-openai>=1.0
+langchain-anthropic>=1.0
+langchain-google-genai>=2.0
+langchain-ollama>=0.3       # local models via Ollama
+tiktoken>=0.7               # token counting
+
+# ---------- Vector stores & retrieval (RAG) ----------
+langchain-chroma>=0.2
+chromadb>=0.5
+faiss-cpu>=1.8              # swap to faiss-gpu on CUDA machines
+rank-bm25>=0.2              # keyword retrieval for hybrid search
+
+# ---------- Document loading & parsing ----------
+pypdf>=4.0
+python-docx>=1.1
+openpyxl>=3.1
+beautifulsoup4>=4.12
+lxml>=5.0
+markdown>=3.6
+
+# ---------- UI frameworks ----------
+gradio>=5.0
+streamlit>=1.40
+plotly>=5.20                # interactive charts that render in both UIs
+
+# ---------- Serving / APIs ----------
+fastapi>=0.115
+uvicorn[standard]>=0.30
+
+# ---------- Data science core ----------
+numpy>=1.26
+pandas>=2.2
+polars>=1.0
+scikit-learn>=1.5
+matplotlib>=3.8
+seaborn>=0.13
+
+# ---------- Notebooks in VS Code ----------
+ipykernel>=6.29             # required for the VS Code Jupyter extension
+jupyter>=1.0
+ipywidgets>=8.1
+
+# ---------- Dev tooling ----------
+ruff>=0.6                   # lint and format (pairs with the Ruff VS Code extension)
+mypy>=1.10
+pytest>=8.0
+pytest-asyncio>=0.23        # test async LangChain code
+pre-commit>=3.7
+
+# ---------- OPTIONAL: heavy installs (uncomment as needed) ----------
+# sentence-transformers>=3.0  # local embeddings; pulls in torch (~2GB)
+# langchain-huggingface>=0.1
+# unstructured[all-docs]      # powerful parsing, very heavy system deps
+# ragas>=0.2                  # RAG evaluation
+# mlflow>=2.14                # experiment tracking and model registry
