@@ -76,7 +76,7 @@ Open **this folder** (`ai-framework/`) as the workspace so `.vscode/` settings a
 | `src/aiframe/workflows/` | chat, RAG (hybrid BM25 + vector), agent, extraction, batch | Step 3 ✅ |
 | `src/aiframe/tools/` | Sample tools: safe calculator, datetime, note search | Step 3 ✅ |
 | `data/sample/` | Fictional handbook, product FAQ, ML glossary for RAG/agent demos | Step 3 ✅ |
-| `apps/` | Gradio, Streamlit, FastAPI front ends | Step 4 |
+| `apps/` | Gradio, Streamlit, FastAPI front ends | Step 4 ✅ |
 | `src/aiframe/eval/` | Golden-set evaluation, LLM-as-judge | Step 5 |
 | `tests/` | Unit tests with mocked LLMs (no API cost) | Step 5 |
 | `notebooks/` | Quickstart notebook using `IPython.display` | Step 5 |
@@ -99,6 +99,31 @@ and has `# TRY:` comments suggesting experiments.
 | 06 | `examples/06_extract.py` | Text → Pydantic → DataFrame, plus a custom schema |
 | 07 | `examples/07_batch.py` | Async batch with retries, latency metrics (`--compare` for speedup) |
 | 08 | `examples/08_evaluate.py` | Scoring against a golden set *(Step 5)* |
+
+---
+
+## Apps
+
+Three front ends over the same workflows. Each starts even with an incomplete
+`.env` and shows a clear configuration message instead of crashing. In VS Code,
+each has a ready-made config in the Run and Debug panel.
+
+| App | Run (from this folder) | Best for |
+|---|---|---|
+| **Gradio** | `python apps/gradio_app.py` → http://127.0.0.1:7860 | Demos and quick internal tools. Tabs for Chat, RAG Q&A (with sources), and Agent (with tool trace). |
+| **Streamlit** | `streamlit run apps/streamlit_app.py` → http://localhost:8501 | Data apps. Chat, plus a batch sentiment dashboard with metrics, charts, and CSV export. |
+| **FastAPI** | `uvicorn apps.api:app --reload` → http://127.0.0.1:8000/docs | Serving other programs. REST endpoints with validated request/response models. |
+
+FastAPI endpoints:
+
+| Method | Path | Purpose |
+|---|---|---|
+| `GET` | `/health` | Readiness probe: `200` when configured, `503` with a fix-it message otherwise |
+| `POST` | `/chat` | `{session_id, message}` → reply; memory is kept per `session_id` |
+| `POST` | `/chat/stream` | Same input, streamed as Server-Sent Events (`data: {"delta": ...}`, then `[DONE]`) |
+| `DELETE` | `/chat/{session_id}` | End a session |
+| `POST` | `/rag/ask` | `{question, include_contexts}` → answer + sources (indexes `DATA_DIR` on first call) |
+| `POST` | `/extract` | `{text, kind: "contacts" \| "sentiment"}` → structured JSON |
 
 ---
 
