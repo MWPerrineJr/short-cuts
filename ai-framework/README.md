@@ -73,8 +73,9 @@ Open **this folder** (`ai-framework/`) as the workspace so `.vscode/` settings a
 |---|---|---|
 | `config/settings.py` | Typed settings, provider validation, tracing setup | Step 1 ✅ |
 | `src/aiframe/core/` | LLM + embeddings factory, prompts, Pydantic schemas | Step 2 ✅ |
-| `src/aiframe/workflows/` | chat, RAG, agent, extraction, batch | Step 3 |
-| `src/aiframe/tools/` | Sample tools for agents | Step 3 |
+| `src/aiframe/workflows/` | chat, RAG (hybrid BM25 + vector), agent, extraction, batch | Step 3 ✅ |
+| `src/aiframe/tools/` | Sample tools: safe calculator, datetime, note search | Step 3 ✅ |
+| `data/sample/` | Fictional handbook, product FAQ, ML glossary for RAG/agent demos | Step 3 ✅ |
 | `apps/` | Gradio, Streamlit, FastAPI front ends | Step 4 |
 | `src/aiframe/eval/` | Golden-set evaluation, LLM-as-judge | Step 5 |
 | `tests/` | Unit tests with mocked LLMs (no API cost) | Step 5 |
@@ -92,11 +93,11 @@ and has `# TRY:` comments suggesting experiments.
 |---|---|---|
 | 01 | `examples/01_check_setup.py` | Fail-fast readiness check: packages, `.env`, provider keys |
 | 02 | `examples/02_llm_factory.py` | invoke, stream, chain, structured output, provider comparison |
-| 03 | `examples/03_chat.py` | Chat with memory and streaming *(Step 3)* |
-| 04 | `examples/04_rag.py` | Ingest → split → embed → retrieve → answer *(Step 3)* |
-| 05 | `examples/05_agent.py` | LangGraph tool-calling agent *(Step 3)* |
-| 06 | `examples/06_extract.py` | Text → validated Pydantic objects *(Step 3)* |
-| 07 | `examples/07_batch.py` | Async concurrency with rate limiting *(Step 3)* |
+| 03 | `examples/03_chat.py` | Chat with memory and streaming (`--live` for interactive) |
+| 04 | `examples/04_rag.py` | Hybrid retrieval comparison, cited answers, "I don't know" check |
+| 05 | `examples/05_agent.py` | Tool-calling agent with traced calls and thread memory |
+| 06 | `examples/06_extract.py` | Text → Pydantic → DataFrame, plus a custom schema |
+| 07 | `examples/07_batch.py` | Async batch with retries, latency metrics (`--compare` for speedup) |
 | 08 | `examples/08_evaluate.py` | Scoring against a golden set *(Step 5)* |
 
 ---
