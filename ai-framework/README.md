@@ -72,7 +72,7 @@ Open **this folder** (`ai-framework/`) as the workspace so `.vscode/` settings a
 | Path | Purpose | Status |
 |---|---|---|
 | `config/settings.py` | Typed settings, provider validation, tracing setup | Step 1 ✅ |
-| `src/aiframe/core/` | LLM + embeddings factory, prompts, Pydantic schemas | Step 2 |
+| `src/aiframe/core/` | LLM + embeddings factory, prompts, Pydantic schemas | Step 2 ✅ |
 | `src/aiframe/workflows/` | chat, RAG, agent, extraction, batch | Step 3 |
 | `src/aiframe/tools/` | Sample tools for agents | Step 3 |
 | `apps/` | Gradio, Streamlit, FastAPI front ends | Step 4 |
@@ -91,7 +91,7 @@ and has `# TRY:` comments suggesting experiments.
 | # | Script | Concept |
 |---|---|---|
 | 01 | `examples/01_check_setup.py` | Fail-fast readiness check: packages, `.env`, provider keys |
-| 02 | `examples/02_llm_factory.py` | One prompt across providers; structured output *(Step 2)* |
+| 02 | `examples/02_llm_factory.py` | invoke, stream, chain, structured output, provider comparison |
 | 03 | `examples/03_chat.py` | Chat with memory and streaming *(Step 3)* |
 | 04 | `examples/04_rag.py` | Ingest → split → embed → retrieve → answer *(Step 3)* |
 | 05 | `examples/05_agent.py` | LangGraph tool-calling agent *(Step 3)* |
