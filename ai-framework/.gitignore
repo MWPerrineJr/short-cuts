@@ -24,10 +24,12 @@ htmlcov/
 .ipynb_checkpoints/
 
 # ---------- Data & generated artifacts ----------
-# Keep real data out of git; the small sample set for examples is allowed.
+# Keep real data out of git; the sample docs and golden eval set are allowed.
 data/*
 !data/sample/
+!data/eval/
 !data/.gitkeep
+reports/
 vectorstore/
 chroma/
 *.faiss
