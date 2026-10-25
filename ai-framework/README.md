@@ -1,5 +1,7 @@
 # AI Framework
 
+[![ai-framework CI](https://github.com/MWPerrineJr/short-cuts/actions/workflows/ai-framework-ci.yml/badge.svg)](https://github.com/MWPerrineJr/short-cuts/actions/workflows/ai-framework-ci.yml)
+
 A reusable, provider-agnostic scaffold for common AI engineering workflows:
 **chat, RAG, agents, structured extraction, and async batch processing**, with
 Gradio, Streamlit, and FastAPI front ends plus evaluation built in.
@@ -175,6 +177,37 @@ in CI. In VS Code, tests appear in the Testing panel.
 | `tests/test_workflows.py` | Chat memory, RAG retrieval and RRF, tool safety, agent trace, extraction, batch retries and concurrency |
 | `tests/test_apps.py` | FastAPI endpoints (TestClient), Gradio handlers, Streamlit (`AppTest`) |
 | `tests/test_eval.py` | Golden-set file validity, refusal detection, metrics, Wilson interval, reports |
+
+---
+
+## Continuous integration
+
+Every pull request (and every push to `main`) that touches `ai-framework/` runs
+`.github/workflows/ai-framework-ci.yml` on GitHub:
+
+| Job | What it does |
+|---|---|
+| **Lint** | `ruff check` and `ruff format --check`, with findings annotated on the PR's changed lines |
+| **Tests** | `pytest` with coverage on Python 3.11 and 3.12; coverage table in the run summary; reports uploaded as artifacts |
+
+No secrets are needed, because tests use fake models. Results appear as ✅/❌
+checks on the PR. To make them mandatory: **Settings → Branches → add a rule for
+`main` → "Require status checks to pass before merging"**, then select the jobs.
+
+### Catch problems before CI: pre-commit
+
+`.pre-commit-config.yaml` (repo root) runs the same Ruff version as CI, plus
+YAML/JSON validation, whitespace fixes, a large-file guard, and private-key
+detection, on every `git commit`:
+
+```bash
+pre-commit install            # once, from the repo root with your venv active
+pre-commit run --all-files    # run everything manually
+```
+
+If a hook fixes a file, the commit stops so you can review. Run `git add` and
+commit again. When upgrading Ruff, bump it in both the workflow
+(`RUFF_VERSION`) and `.pre-commit-config.yaml` so local and CI checks match.
 
 ---
 
